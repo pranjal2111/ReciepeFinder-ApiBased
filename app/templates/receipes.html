@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ receipe.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <l
+            ink rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+               body {
+            background: linear-gradient(to right, #f8f9fa, #fff);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background: linear-gradient(45deg, #ff6f61, #ffa07a);
+        }
+
+        .navbar-brand, .navbar a {
+            color: #fff !important;
+        }
+
+        .recipe-hero-img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .recipe-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .time-badge {
+            font-size: 1rem;
+            padding: 8px 15px;
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            border-radius: 20px;
+        }
+
+        .bg-primary { background-color: #007bff !important; }
+        .bg-success { background-color: #28a745 !important; }
+        .bg-secondary { background-color: #6c757d !important; }
+
+        .ingredient-card, .instruction-card {
+            border-radius: 10px;
+            border: none;
+            background: #fffaf0;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .ingredient-list {
+            list-style-type: none;
+            padding-left: 0;
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        .ingredient-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #ddd;
+            break-inside: avoid;
+        }
+
+        .instruction-step {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .step-number {
+            background-color: #ff6f61;
+            color: white;
+            width: 30px;
+            height: 30px;
+            font-weight: bold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            background: linear-gradient(to right, #ff4d4f, #faad14);
+            color: #333;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin: 5px 5px 5px 0;
+            font-weight: 500;
+        }
+
+        .recipe-meta {
+            background: #fff5e6;
+            border-left: 5px solid #ff7f50;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .recommended-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .recommended-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .recommended-img {
+            height: 150px;
+            object-fit: cover;
+        }
+
+        footer {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="/">
+                <i class="fas fa-utensils me-2"></i>RecipeFinder
+            </a>
+          <a href="/" class="btn rounded-pill text-white border-0"
+   style="background: linear-gradient(135deg, #ff4d4f, #faad14);">
+    <i class="fas fa-arrow-left me-1"></i> Back to Recipes
+</a>
+        </div>
+    </nav>
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Recipe Header -->
+                <div class="recipe-header">
+                    <h1 class="mb-3 fw-bold">{{ receipe.name }}</h1> <div class="d-flex align-items-center mb-2">
+                       <div class="rating me-2 d-flex align-items-center">
+
+    <span class="badge bg-light text-dark fw-medium shadow-sm px-3 py-2 rounded-pill">
+        {{ receipe.rating }} ⭐ | {{ receipe.reviewCount }} Reviews
+    </span>
+</div>
+
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center mb-3">
+    <span class="time-badge me-3 mb-2 text-white" style="background: linear-gradient(135deg, #ff4d4f, #faad14);">
+        <i class="fas fa-clock me-2"></i>Prep: {{ receipe.prepTimeMinutes }} mins | Cook: {{ receipe.cookTimeMinutes }} mins
+    </span>
+    <span class="time-badge me-3 mb-2 text-white" style="background: linear-gradient(135deg, #ff4d4f, #faad14);">
+        <i class="fas fa-fire me-2"></i>{{ receipe.caloriesPerServing }} kcal/serving
+    </span>
+    <span class="time-badge me-3 mb-2 text-white" style="background: linear-gradient(135deg, #ff4d4f, #faad14);">
+        <i class="fas fa-users me-2"></i>{{ receipe.servings }} servings
+    </span>
+</div>
+
+                <!-- Recipe Meta -->
+                <div class="recipe-meta mb-4">
+                    <div class="row">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <h5><i class="fas fa-utensils text-primary me-2"></i>Cuisine</h5>
+                            <p class="mb-0">{{ receipe.cuisine }}</p>
+                        </div>
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <h5><i class="fas fa-tachometer-alt text-primary me-2"></i>Difficulty</h5>
+                            <p class="mb-0">{{ receipe.difficulty }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h5><i class="fas fa-tags text-primary me-2"></i>Tags</h5>
+                            <div>
+                                {% for i in receipe.tags %}
+                                    <span class="tag-pill">{{ i }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
+                    <!-- <p class="lead mb-0">A traditional Italian pizza topped with tomato sauce, fresh mozzarella, and basil leaves - simple yet delicious!</p> -->
+                </div>
+                
+                <!-- Recipe Image -->
+                <div class="mb-4">
+                    <img src="{{ receipe.image }}"
+                         class="recipe-hero-img img-fluid w-100" 
+                         alt="Classic Margherita Pizza">
+                </div>
+                
+                <!-- Recipe Content -->
+                <div class="row g-4 mb-4">
+                    <!-- Ingredients -->
+                    <div class="col-md-12">
+                        <div class="card ingredient-card">
+                            <div class="card-body">
+                                <h3 class="card-title mb-4">
+                                    <i class="fas fa-shopping-basket text-primary me-2"></i>Ingredients
+                                </h3>
+                                <ul class="ingredient-list">
+                                    {% for i in receipe.ingredients %}
+                                                <li>
+                                                    <i class="fas fa-circle small me-2 text-muted" style="font-size: 6px;"></i>{{ i }}
+                                                </li>
+                                            {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instructions -->
+                <div class="card instruction-card mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">
+                            <i class="fas fa-list-ol text-primary me-2"></i>Instructions
+                        </h3>
+                        <div class="instructions">
+                            <div class="instructions">
+                                 {% for instruction in receipe.instructions %}
+                                    <div class="instruction-step">
+                                        <div class="step-number">{{ forloop.counter }}</div> <!-- This will give you the step number -->
+                                        <div>{{ instruction }}</div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recommended Recipes -->
+                <div class="mb-5">
+    <h3 class="mb-4 fw-bold text-primary">More Related Recipes</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <!-- Recipe Card  -->
+        {% for i in related_recipes %}
+        <div class="col">
+            <div class="card recommended-card h-100 border-0 shadow-sm"
+                 style="background: linear-gradient(135deg, #ffffff, #fff7e6); border-radius: 12px;">
+                <img src="{{ i.image }}" class="card-img-top recommended-img rounded-top" alt="{{ i.name }}">
+                <div class="card-body">
+                    <h5 class="card-title text-danger fw-semibold">{{ i.name }}</h5>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-dark small">
+                            <i class="fas fa-clock me-1 text-primary"></i>{{ i.cookTimeMinutes }} mins
+                        </span>
+                        <span class="text-dark small">
+                            <i class="fas fa-star me-1 text-warning"></i>{{ i.rating }}
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="/receipes/{{ i.id }}"
+                       class="btn btn-sm text-white w-100"
+                       style="background: linear-gradient(135deg, #fa541c, #fa8c16); border-radius: 20px;">
+                        View Recipe
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <footer class="bg-light py-4 mt-5">
+        <div class="container text-center text-muted">
+            <p class="mb-0">© 2023 RecipeFinder. All recipes from dummyjson.com/recipes.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
