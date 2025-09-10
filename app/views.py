@@ -47,4 +47,5 @@ def databytags(request,tag):
         "data": response['recipes'],
         "tags": tagsresponse,
     }
+    print("I have commit in your project")
     return render(request,"index.html",context)
